@@ -1,29 +1,63 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <style>
+        .highlight {
+            font-weight: bold;
+            color: red;
+        }
+        .container {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .container div {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-family: 'Open Sans', sans-serif;
+            text-align: center;
+        }
+        .vs {
+            font-size: 2em;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+    <link href='https://fonts.googleapis.com/css2?family=Open+Sans&display=swap' rel='stylesheet'>
+</head>
 <body>
 
-<div id="github-followers"></div>
-<div id="github-stars"></div>
+<div id="github-data" class="container"></div>
 
 <script>
+    const updateData = () => {
+        fetch('https://api.github.com/users/sebinside')
+            .then(response => response.json())
+            .then(data => {
+                const followers = data.followers;
 
-  const lol = () => {
-    fetch('https://api.github.com/users/sebinside')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('github-followers').innerHTML = `<a href="https://github.com/sebinside">Sebinside</a> Followers: ${data.followers}`;
-      });
+                fetch('https://api.github.com/repos/jplag/JPlag')
+                    .then(response => response.json())
+                    .then(data => {
+                        const stars = data.stargazers_count;
+                        let template = `<div> <a href="https://github.com/sebinside" target="_blank">Sebinside</a> Followers: ${followers} </div><div class="vs">vs.</div><div> <a href="https://github.com/jplag/JPlag" target="_blank">JPlag</a> Stars: ${stars}</div><div>EMOTE THANKS</div>`;
+                        if (followers > stars) {
+                            template = template.replace("Followers: ", `<span class="highlight">Followers: </span>`);
+                            template = template.replace(`href="https://github.com/sebinside"`, `href="https://github.com/sebinside" class="highlight"`)
+                            template = template.replace("EMOTE THANKS", `<img src="https://702.rip/hype" alt="hype image">`)
+                        } else {
+                            template = template.replace("Stars: ", `<span class="highlight">Stars: </span>`);
+                            template = template.replace(`href="https://github.com/jplag/JPlag"`, `href="https://github.com/jplag/JPlag" class="highlight"`)
+                            template = template.replace("EMOTE THANKS", `<img src="https://702.rip/sad" alt="sad image">`)
+                        }
+                        document.getElementById('github-data').innerHTML = template;
+                    });
+            });
+    }
 
-    fetch('https://api.github.com/repos/jplag/JPlag')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('github-stars').innerHTML = `<a href="https://github.com/jplag/JPlag">JPlag</a> Stars: ${data.stargazers_count}`;
-      });
-  };
-
-  lol();
-
-  setInterval(lol, 3000);
+    setInterval(updateData, 3000);
+    updateData();
 </script>
 
 </body>
