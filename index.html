@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="github-followers"></div>
+<div id="github-stars"></div>
+
+<script>
+
+  const lol = () => {
+    fetch('https://api.github.com/users/sebinside')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('github-followers').innerHTML = `<a href="https://github.com/sebinside">Sebinside</a> Followers: ${data.followers}`;
+      });
+
+    fetch('https://api.github.com/repos/jplag/JPlag')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('github-stars').innerHTML = `<a href="https://github.com/jplag/JPlag">JPlag</a> Stars: ${data.stargazers_count}`;
+      });
+  };
+
+  lol();
+
+  setInterval(lol, 3000);
+</script>
+
+</body>
+</html>
