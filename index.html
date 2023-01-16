@@ -2,7 +2,11 @@
 <html>
 <head>
     <style>
-        .highlight {
+        .highlight-green {
+            font-weight: bold;
+            color: #f5a80e;
+        }
+        .highlight-red {
             font-weight: bold;
             color: red;
         }
@@ -43,12 +47,12 @@
                         const stars = data.stargazers_count;
                         let template = `<div> <a href="https://github.com/sebinside" target="_blank">Sebinside</a> Followers: ${followers} </div><div class="vs">vs.</div><div> <a href="https://github.com/jplag/JPlag" target="_blank">JPlag</a> Stars: ${stars}</div><div>EMOTE THANKS</div>`;
                         if (followers > stars) {
-                            template = template.replace("Followers: ", `<span class="highlight">Followers: </span>`);
-                            template = template.replace(`href="https://github.com/sebinside"`, `href="https://github.com/sebinside" class="highlight"`)
+                            template = template.replace("Followers: ", `<span class="highlight-green">Followers: </span>`);
+                            template = template.replace(`href="https://github.com/sebinside"`, `href="https://github.com/sebinside" class="highlight-green"`)
                             template = template.replace("EMOTE THANKS", `<img src="https://702.rip/hype" alt="hype image">`)
                         } else {
-                            template = template.replace("Stars: ", `<span class="highlight">Stars: </span>`);
-                            template = template.replace(`href="https://github.com/jplag/JPlag"`, `href="https://github.com/jplag/JPlag" class="highlight"`)
+                            template = template.replace("Stars: ", `<span class="highlight-red">Stars: </span>`);
+                            template = template.replace(`href="https://github.com/jplag/JPlag"`, `href="https://github.com/jplag/JPlag" class="highlight-red"`)
                             template = template.replace("EMOTE THANKS", `<img src="https://702.rip/sad" alt="sad image">`)
                         }
                         document.getElementById('github-data').innerHTML = template;
